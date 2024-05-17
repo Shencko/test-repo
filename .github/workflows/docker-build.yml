@@ -31,4 +31,4 @@ jobs:
         tags: shencko/ubuntu:latest  # Replace with your Docker Hub username and image name.
 
     - name: Clean up
-      run: docker rmi shencko/ubuntu:latest  # Optional step to clean up after push.
+      run: docker rmi myrepo/ubuntu:latest  # Optional step to clean up after push.
