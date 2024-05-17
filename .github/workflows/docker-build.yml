@@ -1,1 +1,34 @@
+name: Build and Push Docker image
 
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch; adjust as necessary.
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # Use an Ubuntu runner.
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE.
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .  # Path to Docker context, usually the root of the project.
+        file: ./Dockerfile  # Path to the Dockerfile.
+        push: true
+        tags: yourusername/yourimage:latest  # Replace with your Docker Hub username and image name.
+
+    - name: Clean up
+      run: docker rmi yourusername/yourimage:latest  # Optional step to clean up after push.
