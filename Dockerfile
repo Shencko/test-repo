@@ -8,6 +8,11 @@ RUN apt-get update && apt-get install -y \
 
 # [Optional] Add application files
 COPY . /app
+# Ensure that your Dockerfile includes a COPY command like this:
+COPY run-tests.sh /usr/src/app/run-tests.sh
+
+# After copying, adjust permissions:
+RUN chmod +x /usr/src/app/run-tests.sh
 
 # [Optional] Set a default command or entry point
 CMD ["bash"]
